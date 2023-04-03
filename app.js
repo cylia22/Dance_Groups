@@ -54,7 +54,8 @@ app.set('views', path.join(__dirname, 'views'))
 
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
-app.use(express.static(path.join(__dirname, 'public')))
+//app.use(express.static(path.join(__dirname, 'public')))
+app.use(express.static(__dirname + "/views"));
 app.use(mongoSanitize({
     replaceWith: '_'
 }))
@@ -169,10 +170,12 @@ app.use('/campgrounds', campgroundRoutes)
 app.use('/campgrounds/:id/reviews', reviewRoutes)
 
 
-app.get('/', (req, res) => {
-    res.render('home')
+//app.get('/', (req, res) => {
+  //  res.render('home')
+//});
+app.get("/", function(req, res){
+  res.sendFile("index.html");
 });
-
 
 app.all('*', (req, res, next) => {
     next(new ExpressError('Page Not Found', 404))
